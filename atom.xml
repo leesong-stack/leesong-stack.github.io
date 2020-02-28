@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://leesong.me</id>
     <title>Leesong&apos;s Blog</title>
-    <updated>2020-02-28T04:59:20.476Z</updated>
+    <updated>2020-02-28T05:11:01.853Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://leesong.me"/>
     <link rel="self" href="https://leesong.me/atom.xml"/>
@@ -15,6 +15,13 @@
         <id>https://leesong.me/java-instrument-ji-zhi/</id>
         <link href="https://leesong.me/java-instrument-ji-zhi/">
         </link>
-        <updated>2020-02-28T04:50:31.000Z</updated>
+        <updated>2020-02-28T05:10:02.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[About Me]]></title>
+        <id>https://leesong.me/about-me/</id>
+        <link href="https://leesong.me/about-me/">
+        </link>
+        <updated>2020-02-28T05:05:20.000Z</updated>
     </entry>
 </feed>
