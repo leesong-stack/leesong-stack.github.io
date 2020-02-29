@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>浅谈Java中的BIO-NIO-AIO [1] | Leesong&#39;s Blog</title>
+  <title>浅谈Java中的BIO-NIO-AIO | Leesong&#39;s Blog</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://leesong.vip/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://leesong.vip/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="浅谈Java中的BIO-NIO-AIO [1] | Leesong&#39;s Blog » Feed" href="https://leesong.vip/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="浅谈Java中的BIO-NIO-AIO | Leesong&#39;s Blog » Feed" href="https://leesong.vip/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://leesong.vip/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,7 +25,7 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="浅谈Java中的BIO-NIO-AIO [1]"/>
+    <meta property="og:description" content="浅谈Java中的BIO-NIO-AIO"/>
     <meta property="og:url" content="https://leesong.vip/post/qian-tan-java-zhong-de-bio-nio-aio/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
@@ -83,10 +83,10 @@
             <a href="https://leesong.vip/tag/PxHN8yewE/" class="tag">Java</a>
             
         </span>
-            <h1>浅谈Java中的BIO-NIO-AIO [1]</h1>
+            <h1>浅谈Java中的BIO-NIO-AIO</h1>
             <span class="meta">
             	Posted on
-              2020-02-28，4 min read
+              2020-02-28，5 min read
             </span>
           </div>
         </div>
@@ -100,7 +100,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <blockquote>
-<p>注：本文说的I/O指的是网络I/O</p>
+<p>注：本文说的I/O，指的是网络I/O<br>
+IO本质上分为两部分：等待 IO（读写）就绪、处理 IO 操作</p>
 </blockquote>
 <h2 id="bio-blocking-io">BIO (Blocking I/O)</h2>
 <p><strong>同步阻塞I/O模型</strong>，接收客户端连接、数据的读和写，都是阻塞在一个线程内完成的（socket.accept()、socket.read()、socket.write() 涉及的三个主要方法都是阻塞的）。这种模型，效率低下，要想处理并发业务，必须一个I/O连接扔给一个Thread去处理。在JVM（Linux x64上的HotSpot VM）中，每个线程占用的内存默认1MB，这就决定了，并发度不可能高；最差的情况是，由于读、写都是阻塞的，当数据交换较少的时候，很多线程就被阻塞住了（挂起状态），而且CPU不停在做线程上下文切换，效率极低！<br>
@@ -110,16 +111,16 @@
 </blockquote>
 <h2 id="nionon-blocking-io">NIO（Non-blocking I/O）</h2>
 <p><strong>同步非阻塞的I/O模型</strong>，在Java 1.4 中引入了 NIO 框架，对应 java.nio 包，提供了 Channel，Selector，Buffer三大核心组件。</p>
-<h3 id="buffer缓冲区">Buffer（缓冲区）</h3>
+<h4 id="buffer缓冲区">Buffer（缓冲区）</h4>
 <p>NIO都是通过Buffer来读写数据的，而BIO是通过Stream流的方式读写数据，虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。<br>
 在NIO中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的; 在写入数据时，写入到缓冲区中。任何时候访问NIO中的数据，都是通过缓冲区进行操作。</p>
-<h3 id="channel通道">Channel（通道）</h3>
-<p>NIO 通过Channel（通道） 进行读写。通道是双向的，可读也可写，而BIO中流的读写是单向的。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以非阻塞地读写。</p>
-<h3 id="selector-选择器">Selector (选择器)</h3>
+<h4 id="channel通道">Channel（通道）</h4>
+<p>NIO 通过Channel（通道） 进行读写。通道是双向的，可读也可写，而BIO中流的读写是单向的（分为InputStream、OutputStream）。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以非阻塞地读写。</p>
+<h4 id="selector-选择器">Selector (选择器)</h4>
 <p>NIO有选择器，而IO没有。选择器用于使用单个线程以<strong>非阻塞</strong>的处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。<br>
 <img src="https://leesong.vip/post-images/1582902690845.png" alt="" loading="lazy"></p>
 <blockquote>
-<p>注：NIO的非阻塞，指的是读写操作是非阻塞的（直接读写Buffer，不必等待客户端响应），selector的轮询还是阻塞的，无论是通过操作系统的通知（epoll）还是不停的轮询（select，poll），这个函数是阻塞的。所以你可以放心大胆地在一个while(true)里面调用这个函数而不用担心CPU空转。</p>
+<p>注：NIO的非阻塞，指的是读写操作是非阻塞的（有数据就读写，没数据就直接返回），selector的轮询还是阻塞的，无论是通过操作系统的通知（epoll）还是不停的轮询（select，poll），这个函数是阻塞的。所以你可以放心大胆地在一个while(true)里面调用这个函数而不用担心CPU空转。</p>
 </blockquote>
 <h2 id="aio-asynchronous-io">AIO (Asynchronous I/O)</h2>
 <p>在 Java 7 中引入了 NIO 的改进版 AIO，它是<strong>异步非阻塞的IO模型</strong>，是基于事件和回调机制实现的。<br>
@@ -128,9 +129,21 @@
 <blockquote>
 <p>Tips：为什么Netty使用NIO而不是AIO？</p>
 <ol>
-<li>Netty不看重Windows上的使用，在Linux系统上，AIO的底层实现仍使用epoll（NIO也是epoll模型），没有很好实现AIO，因此在性能上没有明显的优势，而且被JDK封装了一层不容易深度优化</li>
+<li>Netty不看重Windows上的使用，在Linux(2.6内核以上)系统上，AIO的底层实现仍使用epoll（NIO也是epoll模型）模型，没有真正实现AIO（Windows上用完成端口IOCP实现了），因此在性能上没有明显的优势，而且被JDK封装了一层不容易深度优化</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
 <li>Netty整体架构是reactor模型, 而AIO是proactor模型, 混合在一起会非常混乱，把AIO也改造成reactor模型看起来是把epoll绕个弯又绕回来</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
 <li>AIO还有个缺点是接收数据需要预先分配缓存, 而不是NIO那种需要接收时才需要分配缓存, 所以对连接数量非常大但流量小的情况, 内存浪费很多</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
 <li>Linux上AIO可能不够成熟</li>
 </ol>
 </blockquote>
@@ -140,7 +153,7 @@
 <li>阻塞非阻塞关注的是等待消息时的状态，是说，我发了消息之后，是否要等待消息回来，消息没回来之前，我一直等（<strong>阻塞</strong>）还是干别的事（<strong>非阻塞</strong>）</li>
 </ol>
 <h3 id="参考资料">参考资料：</h3>
-<p>https://zhuanlan.zhihu.com/p/23488863</p>
+<p><a href="https://zhuanlan.zhihu.com/p/23488863">美团技术团队</a></p>
 
           
           <p class="next-post">下一篇：
