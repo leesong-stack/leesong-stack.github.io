@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://leesong.vip</id>
+    <id>https://leesong-stack.github.io</id>
     <title>Leesong&apos;s Blog</title>
     <updated>2020-03-01T03:36:21.361Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://leesong.vip"/>
-    <link rel="self" href="https://leesong.vip/atom.xml"/>
+    <link rel="alternate" href="https://leesong-stack.github.io"/>
+    <link rel="self" href="https://leesong-stack.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://leesong.vip/images/avatar.png</logo>
-    <icon>https://leesong.vip/favicon.ico</icon>
+    <logo>https://leesong-stack.github.io/images/avatar.png</logo>
+    <icon>https://leesong-stack.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Leesong&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[高性能队列-Disruptor [转]]]></title>
-        <id>https://leesong.vip/post/gao-xing-neng-dui-lie-disruptor-zhuan/</id>
-        <link href="https://leesong.vip/post/gao-xing-neng-dui-lie-disruptor-zhuan/">
+        <id>https://leesong-stack.github.io/post/gao-xing-neng-dui-lie-disruptor-zhuan/</id>
+        <link href="https://leesong-stack.github.io/post/gao-xing-neng-dui-lie-disruptor-zhuan/">
         </link>
         <updated>2020-02-29T14:25:31.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[浅谈Java中的BIO-NIO-AIO]]></title>
-        <id>https://leesong.vip/post/qian-tan-java-zhong-de-bio-nio-aio/</id>
-        <link href="https://leesong.vip/post/qian-tan-java-zhong-de-bio-nio-aio/">
+        <id>https://leesong-stack.github.io/post/qian-tan-java-zhong-de-bio-nio-aio/</id>
+        <link href="https://leesong-stack.github.io/post/qian-tan-java-zhong-de-bio-nio-aio/">
         </link>
         <updated>2020-02-28T08:49:25.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Java Instrument机制]]></title>
-        <id>https://leesong.vip/post/java-instrument-ji-zhi/</id>
-        <link href="https://leesong.vip/post/java-instrument-ji-zhi/">
+        <id>https://leesong-stack.github.io/post/java-instrument-ji-zhi/</id>
+        <link href="https://leesong-stack.github.io/post/java-instrument-ji-zhi/">
         </link>
         <updated>2020-02-28T05:10:02.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[About Me]]></title>
-        <id>https://leesong.vip/post/about-me/</id>
-        <link href="https://leesong.vip/post/about-me/">
+        <id>https://leesong-stack.github.io/post/about-me/</id>
+        <link href="https://leesong-stack.github.io/post/about-me/">
         </link>
         <updated>2020-02-28T05:05:20.000Z</updated>
     </entry>
