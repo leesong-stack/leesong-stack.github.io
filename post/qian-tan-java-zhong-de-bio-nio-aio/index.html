@@ -11,22 +11,22 @@
   <meta name="author" content="kveln">
   <title>浅谈Java中的BIO-NIO-AIO | Leesong&#39;s Blog</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://leesong-stack.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!--  <link href="https://leesong-stack.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- <link href="media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="浅谈Java中的BIO-NIO-AIO | Leesong&#39;s Blog » Feed" href="https://leesong-stack.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="浅谈Java中的BIO-NIO-AIO | Leesong&#39;s Blog » Feed" href="atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
-  <link href="https://leesong-stack.github.io/styles/main.css" rel="stylesheet">
+  <link href="styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
-  <!-- <script src="https://leesong-stack.github.io/media/scripts/jquery.min.js"></script> -->
+  <!-- <script src="media/scripts/jquery.min.js"></script> -->
   <script>hljs.initHighlightingOnLoad();</script>
   
 
     <meta property="og:description" content="浅谈Java中的BIO-NIO-AIO"/>
-    <meta property="og:url" content="https://leesong-stack.github.io/post/qian-tan-java-zhong-de-bio-nio-aio/"/>
+    <meta property="og:url" content="post/qian-tan-java-zhong-de-bio-nio-aio/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="Leesong&#39;s Blog"/>
@@ -63,7 +63,7 @@
           
           <li class="nav-item">
               
-              <a class="nav-link" href="https://leesong-stack.github.io/post/about-me">关于</a>
+              <a class="nav-link" href="post/about-me">关于</a>
               
           </li>
           
@@ -72,7 +72,7 @@
     </div>
   </nav>
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://leesong-stack.github.io/media/images/home-bg.jpg')">
+  <header class="masthead" style="background-image: url('media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -80,7 +80,7 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://leesong-stack.github.io/tag/PxHN8yewE/" class="tag">Java</a>
+            <a href="tag/PxHN8yewE/" class="tag">Java</a>
             
         </span>
             <h1>浅谈Java中的BIO-NIO-AIO</h1>
@@ -105,7 +105,7 @@ IO本质上分为两部分：等待 IO（读写）就绪、处理 IO 操作</p>
 </blockquote>
 <h2 id="bio-blocking-io">BIO (Blocking I/O)</h2>
 <p><strong>同步阻塞I/O模型</strong>，接收客户端连接、数据的读和写，都是阻塞在一个线程内完成的（socket.accept()、socket.read()、socket.write() 涉及的三个主要方法都是阻塞的）。这种模型，效率低下，要想处理并发业务，必须一个I/O连接扔给一个Thread去处理。在JVM（Linux x64上的HotSpot VM）中，每个线程占用的内存默认1MB，这就决定了，并发度不可能高；最差的情况是，由于读、写都是阻塞的，当数据交换较少的时候，很多线程就被阻塞住了（挂起状态），而且CPU不停在做线程上下文切换，效率极低！<br>
-<img src="https://leesong-stack.github.io/post-images/1582899967877.png" alt="" loading="lazy"></p>
+<img src="post-images/1582899967877.png" alt="" loading="lazy"></p>
 <blockquote>
 <p><em>对于低负载、低并发的应用程序，可以使用BIO来提升开发效率和更好的维护性。</em></p>
 </blockquote>
@@ -118,13 +118,13 @@ IO本质上分为两部分：等待 IO（读写）就绪、处理 IO 操作</p>
 <p>NIO 通过Channel（通道） 进行读写。通道是双向的，可读也可写，而BIO中流的读写是单向的（分为InputStream、OutputStream）。无论读写，通道只能和Buffer交互。因为 Buffer，通道可以非阻塞地读写。</p>
 <h4 id="selector-选择器">Selector (选择器)</h4>
 <p>NIO有选择器，而IO没有。选择器用于使用单个线程以<strong>非阻塞</strong>的处理多个通道。因此，它需要较少的线程来处理这些通道。线程之间的切换对于操作系统来说是昂贵的。 因此，为了提高系统效率选择器是有用的。<br>
-<img src="https://leesong-stack.github.io/post-images/1582902690845.png" alt="" loading="lazy"></p>
+<img src="post-images/1582902690845.png" alt="" loading="lazy"></p>
 <blockquote>
 <p>注：NIO的非阻塞，指的是读写操作是非阻塞的（有数据就读写，没数据就直接返回），selector的轮询还是阻塞的，无论是通过操作系统的通知（epoll）还是不停的轮询（select，poll），这个函数是阻塞的。所以你可以放心大胆地在一个while(true)里面调用这个函数而不用担心CPU空转。</p>
 </blockquote>
 <h2 id="aio-asynchronous-io">AIO (Asynchronous I/O)</h2>
 <p>在 Java 7 中引入了 NIO 的改进版 AIO，它是<strong>异步非阻塞的IO模型</strong>，是基于事件和回调机制实现的。<br>
-<img src="https://leesong-stack.github.io/post-images/1582902697720.png" alt="" loading="lazy"></p>
+<img src="post-images/1582902697720.png" alt="" loading="lazy"></p>
 <p>虽然 NIO 在网络操作中，提供了非阻塞的方法，但是 NIO 的 IO 行为还是同步的。对于 NIO 来说，我们的业务线程是在 IO 操作准备好时，得到通知，接着就由这个线程自行进行 IO 操作，IO操作本身是同步的。（除了 AIO， 其他的 IO 模型都是同步的）</p>
 <blockquote>
 <p>Tips：为什么Netty使用NIO而不是AIO？</p>
@@ -157,7 +157,7 @@ IO本质上分为两部分：等待 IO（读写）就绪、处理 IO 操作</p>
 
           
           <p class="next-post">下一篇：
-            <a href="https://leesong-stack.github.io/post/java-instrument-ji-zhi/">
+            <a href="post/java-instrument-ji-zhi/">
               <span class="post-title">
                 Java Instrument机制&rarr;
               </span>
@@ -192,7 +192,7 @@ IO本质上分为两部分：等待 IO（读写）就绪、处理 IO 操作</p>
             
               
               <li class="list-inline-item">
-              <a href="https://leesong-stack.github.io/atom.xml" target="_blank">
+              <a href="atom.xml" target="_blank">
                 <span class="fa-stack fa-lg">
                   <i class="fas fa-circle fa-stack-2x"></i>
                   <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -207,10 +207,10 @@ IO本质上分为两部分：等待 IO（读写）就绪、处理 IO 操作</p>
    </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="https://leesong-stack.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="media/scripts/bootstrap.bundle.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
   <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
-  <!-- <script src="https://leesong-stack.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <!-- <script src="media/scripts/clean-blog.min.js"></script> -->
   <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
   <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
 <a id="back_to_top" href="#" class="back_to_top">
